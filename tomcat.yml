@@ -1,0 +1,17 @@
+---
+
+- name: Java and Tomcat Installation and configuration
+  hosts: all
+  sudo: True
+  tasks:
+    - name: Installing Required items.
+      apt: pkg={{ item }} state=latest
+      with_items:
+        - curl
+        - wget
+
+  roles:
+    - role: java
+
+    - role: tomcat
+         

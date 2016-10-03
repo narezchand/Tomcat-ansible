@@ -1,0 +1,31 @@
+---
+ - name: Tomcat Installation and configuration
+   apt: pkg=tomcat7 state=latest
+
+ - name: Adding CATALINA home to env variables.
+   lineinfile: >
+     dest={{ env_path }}
+     regexp='^CATALINA_HOME.*'
+     line='CATALINA_HOME={{ catalina_home }}'
+     insertafter='^PATH.*'
+
+ - name: Adding Tomcat path
+   lineinfile: >
+     dest={{ env_path }}
+     state=present
+     backrefs=yes
+     regexp='PATH=(["]*)((?!.*?{{ catalina_home }}/bin).*?)(["]*)$'
+     line="PATH=\1\2:{{ catalina_home }}/bin\3"
+
+ - name: Tomcat7 conf file
+   template:
+     src: tomcat-users.xml
+     dest: "{{ tom_user }}"
+   notify: restart_tomcat7
+
+
+ - name: Tomcat7 server 8082 port
+   template:
+     src: server.xml
+     dest: "{{ tom_server }}"
+   notify: restart_tomcat7

@@ -1,0 +1,12 @@
+---
+- hosts: web-server
+  user: nareshbabu0302
+  sudo: True
+  vars: 
+    motd_warning: 'Welcome to ansible\n Live, Love\n'
+  
+  tasks: 
+    - name: sample1
+      copy:
+        dest: /home/nareshbabu0302/test.txt
+        content: "{{ motd_warning }}"
