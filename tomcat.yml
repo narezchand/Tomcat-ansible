@@ -1,7 +1,7 @@
 ---
 
 - name: Java and Tomcat Installation and configuration
-  hosts: all
+  hosts: web-server
   sudo: True
   tasks:
     - name: Installing Required items.
